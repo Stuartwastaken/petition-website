@@ -11,17 +11,29 @@
   <div class="container">
     <h1 class="mt-4 mb-4">Petition to Reinstate the Christopher Columbus Statue and Celebrate Indigenous People</h1>
     <div id="petition"></div>
-    <script>
-      // Fetch the raw Markdown petition content
-      fetch('petition.md')
-        .then(response => response.text())
-        .then(text => {
-          // Render the Markdown content as HTML
-          const html = marked(text);
-          // Insert the rendered HTML into the page
-          document.getElementById('petition').innerHTML = html;
-        });
-    </script>
+   <script>
+  // Wait for the DOM to be fully loaded before running the script
+  window.addEventListener('DOMContentLoaded', function() {
+    // Fetch the raw Markdown petition content
+    fetch('./petition.md')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(text => {
+        // Render the Markdown content as HTML
+        const html = marked(text);
+        // Insert the rendered HTML into the page
+        document.getElementById('petition').innerHTML = html;
+      })
+      .catch(error => {
+        console.error('There was a problem fetching the petition file:', error);
+      });
+  });
+</script>
+
   </div>
 </body>
 </html>
