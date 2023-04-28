@@ -20,15 +20,6 @@
     #pdf-container {
       margin-top: 20px;
     }
-
-    /* Custom JavaScript */
-    function displayPDF(url) {
-      const embed = document.createElement('embed');
-      embed.src = url;
-      embed.width = '100%';
-      embed.height = '600px';
-      document.getElementById('pdf-container').appendChild(embed);
-    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/marked@4.0.10/marked.min.js"></script>
 </head>
@@ -59,23 +50,13 @@
             console.error('There was a problem fetching the petition file:', error);
           });
 
-        // Fetch the PDF file and display it
-        fetch('./petition.pdf')
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.blob();
-          })
-          .then(blob => {
-            // Create a URL object from the Blob
-            const url = URL.createObjectURL(blob);
-            // Call the custom function to display the PDF
-            displayPDF(url);
-          })
-          .catch(error => {
-            console.error('There was a problem fetching the PDF file:', error);
-          });
+        // Create an <embed> element to display the PDF
+        const embed = document.createElement('embed');
+        embed.src = './petition.pdf';
+        embed.width = '100%';
+        embed.height = '600px';
+        // Insert the <embed> element into the page
+        document.getElementById('pdf-container').appendChild(embed);
       });
     </script>
 
